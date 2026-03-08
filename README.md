@@ -1,6 +1,7 @@
 # HMLR Document Analysis Challenge
 
 A modular pipeline for analysing **scanned planning documents** and extracting structured information from them. The project demonstrates how **OCR and rule-based text processing** can be combined to convert historical planning records into a structured dataset suitable for analysis.
+
 ---
 # Overview
 
