@@ -1,4 +1,4 @@
-# HMLR Document Analysis Challenge
+# HMLR Document Analysis Task
 
 A modular pipeline for analysing **scanned planning documents** and extracting structured information from them. The project demonstrates how **OCR and rule-based text processing** can be combined to convert historical planning records into a structured dataset suitable for analysis.
 
@@ -34,32 +34,34 @@ The final output is a clean table containing:
 ---
 # Project Structure
 
+The repository is organised into modular pipeline components, notebooks for execution and analysis, and dedicated folders for input data and documentation assets.
+
 ```
 hmlr-document-analysis
 │
 ├── data/
-│   ├── raw/                # Input planning PDFs
-│   └── images/             # Generated page images (OCR input)
+│   ├── raw/
+│   │   └── .gitkeep              # Placeholder so folder exists in Git
+│   └── images/
+│       └── .gitkeep              # Generated page images (OCR input)
 │
 ├── notebooks/
-│   ├── 01_analysis_walkthrough.ipynb   # Detailed analysis and explanation
-│   └── 02_run_pipeline.ipynb           # Simple notebook to execute pipeline
-│
-├── outputs/
-│   └── results.csv         # Final structured dataset
+│   ├── analysis.ipynb            # Detailed analysis and explanation
+│   └── run_pipeline.ipynb        # Simple notebook to execute pipeline
 │
 ├── src/
-│   ├── __init__.py
-│   ├── config.py           # Project paths and configuration
-│   ├── pdf_to_images.py    # PDF → image conversion
-│   ├── ocr.py              # OCR text extraction
-│   ├── classify.py         # Page classification rules
-│   ├── extract.py          # Entity extraction logic
-│   └── pipeline.py         # End-to-end processing pipeline
+│   ├── pdf_to_images.py          # PDF → image conversion
+│   ├── ocr.py                    # OCR text extraction
+│   ├── classify.py               # Page classification rules
+│   ├── extract.py                # Entity extraction logic
+│   └── pipeline.py               # End-to-end processing pipeline
 │
-├── requirements.txt
-├── .gitignore
-└── README.md
+├── assets/
+│   └── pipeline.png              # Pipeline diagram used in README
+│
+├── README.md                     # Project documentation
+├── requirements.txt              # Python dependencies
+└── .gitignore                    # Ignore data, outputs, and system files
 ```
 
 This structure separates **analysis**, **reusable code**, and **data**, making the project easier to maintain and extend.
@@ -237,8 +239,6 @@ Run all cells.
 
 ---
 
-## Step 3 - Output
-
 The pipeline produces a structured dataset saved to:
 
 ```
@@ -249,12 +249,26 @@ Example output:
 
 | page | page_type                  | application_number | applicant            |
 | ---- | -------------------------- | ------------------ | -------------------- |
-| 1    | Planning Register          | 02/80/1609         | Mr & Mrs JM Doe      |
-| 1    | Planning Register          | 02/81/1237         | My First Company Ltd |
-| 2    | Planning Permission Notice | P/00/0759          | Mr M Dale            |
-| 4    | Approval Notice            | P/98/0964          | Mrs AM Stephens      |
+| 1    | Planning Register          | ******1609         | Mr *********Doe      |
+| 1    | Planning Register          | 02/8******        | My ************** Ltd |
+| 2    | Planning Permission Notice | P/********          | Mr ***ale           |
+| 4    | Approval Notice            | **********         | Mrs A********ns      |
 
 This format is designed to be easily analysed in tools such as **Excel or pandas**.
+
+---
+
+# Reproducibility
+
+To reproduce the workflow:
+
+1. Create and activate a virtual environment
+2. Install dependencies from `requirements.txt`
+3. Install Tesseract OCR locally
+4. Place the input PDF in `data/raw/`
+5. Run `notebooks/run_pipeline.ipynb`
+
+The repository excludes source documents, generated images, and outputs from version control to keep the project lightweight and protect challenge data.
 
 ---
 
@@ -262,9 +276,9 @@ This format is designed to be easily analysed in tools such as **Excel or pandas
 
 The pipeline was designed to prioritise:
 
-* **Readability** — clear modular Python functions
-* **Reproducibility** — consistent directory structure
-* **Extensibility** — easy to add new extraction rules or document types
+* **Readability** - clear modular Python functions
+* **Reproducibility** - consistent directory structure
+* **Extensibility** - easy to add new extraction rules or document types
 
 Separating reusable logic into the `src/` modules allows the notebooks to focus on **analysis and demonstration**, while the processing code remains reusable.
 
@@ -284,5 +298,6 @@ Possible extensions include:
 # Author
 
 **Olaoluwa Johnson Taiwo**
+
 Data Scientist
 Document Analysis Pipeline
