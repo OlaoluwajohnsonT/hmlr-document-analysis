@@ -1,16 +1,11 @@
 # HMLR Document Analysis Challenge
 
-A modular pipeline for analysing **scanned planning documents** and extracting structured information from them.
-
-The project demonstrates how **OCR and rule-based text processing** can be combined to convert historical planning records into a structured dataset suitable for analysis.
-
+A modular pipeline for analysing **scanned planning documents** and extracting structured information from them. The project demonstrates how **OCR and rule-based text processing** can be combined to convert historical planning records into a structured dataset suitable for analysis.
 ---
-
 # Overview
 
 Planning decision documents are often distributed as **scanned PDFs**, meaning the text cannot be directly extracted.
 This project implements a workflow that converts these documents into machine-readable text and identifies key information.
-
 The pipeline performs the following steps:
 
 ```
@@ -30,14 +25,12 @@ Structured Dataset
 ```
 
 The final output is a clean table containing:
-
 * Page number
 * Document type
 * Application number(s)
 * Applicant name(s)
 
 ---
-
 # Project Structure
 
 ```
@@ -215,7 +208,7 @@ https://github.com/tesseract-ocr/tesseract
 
 # Running the Pipeline
 
-## Step 1 — Add Input Document
+## Step 1 - Add Input Document
 
 Place the planning document inside:
 
@@ -231,7 +224,7 @@ data/raw/anonymised.pdf
 
 ---
 
-## Step 2 — Run the Pipeline
+## Step 2 - Run the Pipeline
 
 Open the execution notebook:
 
@@ -243,7 +236,7 @@ Run all cells.
 
 ---
 
-## Step 3 — Output
+## Step 3 - Output
 
 The pipeline produces a structured dataset saved to:
 
@@ -290,6 +283,5 @@ Possible extensions include:
 # Author
 
 **Olaoluwa Johnson Taiwo**
-
-MBA – Business Analytics & Artificial Intelligence
-Document Analysis Pipeline for the **HM Land Registry Data Science Challenge**
+Data Scientist
+Document Analysis Pipeline
