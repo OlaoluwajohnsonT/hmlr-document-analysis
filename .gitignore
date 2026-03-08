@@ -1,0 +1,19 @@
+# Data files
+data/raw/*.pdf
+data/images/
+
+# Output files
+outputs/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Virtual environment
+.venv/
+
+# macOS
+.DS_Store
