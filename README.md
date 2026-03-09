@@ -36,8 +36,11 @@ The final output is a clean table containing:
 
 The repository is organised into modular pipeline components, notebooks for execution and analysis, and dedicated folders for input data and documentation assets.
 
+
 ```
 hmlr-document-analysis
+│
+├── analysis_report.md           # One-page challenge analysis
 │
 ├── data/
 │   ├── raw/
@@ -46,8 +49,8 @@ hmlr-document-analysis
 │       └── .gitkeep              # Generated page images (OCR input)
 │
 ├── notebooks/
-│   ├── analysis.ipynb            # Detailed analysis and explanation
-│   └── run_pipeline.ipynb        # Simple notebook to execute pipeline
+│   ├── 01_Document_Analysis_walkthrough.ipynb
+│   └── 02_run_pipeline.ipynb
 │
 ├── src/
 │   ├── pdf_to_images.py          # PDF → image conversion
@@ -59,12 +62,21 @@ hmlr-document-analysis
 ├── assets/
 │   └── pipeline.png              # Pipeline diagram used in README
 │
-├── README.md                     # Project documentation
-├── requirements.txt              # Python dependencies
-└── .gitignore                    # Ignore data, outputs, and system files
+├── README.md
+├── requirements.txt
+└── .gitignore
 ```
 
 This structure separates **analysis**, **reusable code**, and **data**, making the project easier to maintain and extend.
+
+---
+## Analysis Report
+
+A brief one-page analysis of the document structure, exploratory observations, limitations of the approach, and potential alternative methods is included in:
+
+`analysis_report.md`
+
+This report summarises key insights from the document inspection and discusses potential improvements such as machine learning based page classification and named entity recognition approaches.
 
 ---
 
@@ -269,6 +281,8 @@ To reproduce the workflow:
 5. Run `notebooks/run_pipeline.ipynb`
 
 The repository excludes source documents, generated images, and outputs from version control to keep the project lightweight and protect challenge data.
+
+NOTE: Generated artifacts such as page images and output datasets are excluded from version control and will be created automatically when the pipeline is executed.
 
 ---
 
