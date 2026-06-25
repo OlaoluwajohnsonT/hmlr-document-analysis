@@ -36,13 +36,12 @@ def pdf_to_images(pdf_path: Path, output_dir: Path, dpi: int = 300) -> list[Path
     pages = convert_from_path(str(pdf_path), dpi=dpi)
     image_paths = []
 
+    # Use a sanitized file stem to avoid spaces in generated file names
     stem = pdf_path.stem.replace(" ", "_")
 
     for page_num, page in enumerate(pages, start=1):
-
         image_path = output_dir / f"{stem}_page_{page_num:04d}.png"
         page.save(image_path, "PNG")
-
         image_paths.append(image_path)
 
     return image_paths

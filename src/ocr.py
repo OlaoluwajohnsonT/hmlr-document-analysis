@@ -33,22 +33,17 @@ def ocr_image(image_path: Path, page_number: int, config: str) -> str:
     """
 
     image = Image.open(image_path)
-
-    # Convert to grayscale to improve OCR contrast
-    image = image.convert("L")
+    image = image.convert("L")  # Convert to grayscale to improve OCR contrast
 
     width, height = image.size
 
-    # Special handling for the first page
-    # The register table tends to produce noisy OCR results
+    # Special handling for the first page because the register section
+    # is often noisy and the top portion contains less useful text.
     if page_number == 1:
-
         crop_start = int(height * 0.35)
         image = image.crop((0, crop_start, width, height))
 
     text = pytesseract.image_to_string(image, config=config)
-
-    # Collapse excessive whitespace
-    text = " ".join(text.split())
+    text = " ".join(text.split())  # Collapse excessive whitespace
 
     return text

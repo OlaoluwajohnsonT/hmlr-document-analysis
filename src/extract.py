@@ -1,3 +1,13 @@
+"""
+extract.py
+
+Text extraction helpers for the HMLR document analysis project.
+
+This module contains utilities for extracting application numbers and
+applicant names from OCR-produced text, while normalising common OCR
+errors and removing duplicate candidates.
+"""
+
 import re
 
 
@@ -19,12 +29,11 @@ APP_NO_PATTERN = re.compile(
 
 
 def extract_application_numbers(text: str) -> list[str]:
+    """Extract application numbers from OCR text."""
     matches = APP_NO_PATTERN.findall(text)
-
     cleaned = []
 
     for m in matches:
-
         m = re.sub(r"\s+", "", m)
         m = m.replace("o", "0").replace("O", "0")
 
@@ -70,12 +79,10 @@ COMPANY_PATTERN = re.compile(
 # ------------------------------------------------
 
 def _normalise_ocr_text(text: str) -> str:
-
+    """Normalise common OCR artefacts in extracted text."""
     text = " ".join(text.split())
-
     text = re.sub(r"\bVirs\b", "Mrs", text, flags=re.IGNORECASE)
     text = re.sub(r"\bMra\b", "Mrs", text, flags=re.IGNORECASE)
-
     return text
 
 
@@ -84,9 +91,8 @@ def _normalise_ocr_text(text: str) -> str:
 # ------------------------------------------------
 
 def _clean_applicant(candidate: str) -> str:
-
+    """Clean and normalise an applicant candidate string."""
     candidate = candidate.strip(" ,.|;:-")
-
     candidate = re.sub(
         r"^Conditional approval granted to\s+",
         "",
@@ -95,19 +101,14 @@ def _clean_applicant(candidate: str) -> str:
     )
 
     candidate = re.split(r"[©|]", candidate)[0].strip()
-
     candidate = candidate.replace(".", "")
-
     candidate = re.sub(r"\s+", " ", candidate).strip()
-
     candidate = re.sub(r"\s*&\s*", " & ", candidate)
 
-    # FIX OCR title spacing (MrsJ -> Mrs J)
+    # Fix OCR title spacing (MrsJ -> Mrs J)
     candidate = re.sub(r"\b(Mr|Mrs|Miss|Ms)([A-Z])", r"\1 \2", candidate)
-
-    # collapse spaced initials
+    # Collapse spaced initials (J D -> JD)
     candidate = re.sub(r"\b([A-Z])\s+([A-Z])\b", r"\1\2", candidate)
-
     return candidate
 
 
@@ -116,19 +117,15 @@ def _clean_applicant(candidate: str) -> str:
 # ------------------------------------------------
 
 def _canonical_name(name: str) -> str:
-
+    """Return a normalised key for comparing applicant names."""
     name = name.lower()
-
     name = name.replace(".", "")
-
     name = re.sub(r"\s+", " ", name).strip()
 
     # remove spaces between initials
     name = re.sub(r"\b([a-z])\s+([a-z])\b", r"\1\2", name)
-
-    # normalise titles
+    # normalise common title variants
     name = name.replace("mr & mrs", "mr mrs")
-
     return name
 
 
@@ -137,14 +134,12 @@ def _canonical_name(name: str) -> str:
 # ------------------------------------------------
 
 def _dedupe_preserve_order(values: list[str]) -> list[str]:
-
+    """Remove duplicate values while preserving original order."""
     seen = set()
     result = []
 
     for value in values:
-
         key = _canonical_name(value)
-
         if key not in seen:
             seen.add(key)
             result.append(value)
@@ -157,7 +152,7 @@ def _dedupe_preserve_order(values: list[str]) -> list[str]:
 # ------------------------------------------------
 
 def extract_applicants(text: str) -> list[str]:
-
+    """Extract applicant names from OCR text."""
     text = _normalise_ocr_text(text)
 
     candidates = []
@@ -165,14 +160,10 @@ def extract_applicants(text: str) -> list[str]:
     candidates.extend(COMPANY_PATTERN.findall(text))
 
     cleaned = []
-
     for c in candidates:
-
         c = _clean_applicant(c)
-
         if len(c.split()) < 2:
             continue
-
         cleaned.append(c)
 
     return _dedupe_preserve_order(cleaned)

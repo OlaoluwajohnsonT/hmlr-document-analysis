@@ -9,11 +9,15 @@ the type of document page (register, permission notice, approval notice, etc.).
 
 def classify_page(text: str) -> str:
     """
-    Determine the document page type based on text patterns.
+    Determine the document page type from OCR text.
+
+    The classifier is intentionally simple and rule-based, matching
+    expected phrases in the lowercased text.
     """
 
     text = text.lower()
 
+    # Identify the main planning register page format first
     if "conditional approval granted" in text and "application no" in text:
         return "Planning Register"
 
@@ -26,4 +30,5 @@ def classify_page(text: str) -> str:
     if "planning permission" in text and "application number" in text:
         return "Planning Permission Notice"
 
+    # Fallback label for pages that do not match known patterns
     return "Other"
